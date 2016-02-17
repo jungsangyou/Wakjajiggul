@@ -1,0 +1,19 @@
+[{loginId: 'ej8486.choi@gmail.com',
+  password: '1234',
+  name: 'Eunjung Choi',
+  nickname: 'Choi 1',
+  admin: false
+ },
+ {loginId: 'sqsp27@gmail.com',
+  password: '1234',
+  name: 'Eunjung Choi',
+  nickname: 'Choi 2',
+  admin: false
+ },
+ {loginId: 'jungsangyou@gmail.com',
+  password: '1234',
+  name: 'Jungsang You',
+  nickname: 'TOP',
+  admin: true
+ }
+]

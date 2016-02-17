@@ -6,7 +6,7 @@ var express = require('express'),
 //  mongoskin = require('mongoskin'),
   mongoose = require('mongoose'),
   models = require('./models'),
-  dbUrl = process.env.MONGOHQ_URL || 'mongodb://@localhost:27017/jsy',
+  dbUrl = process.env.MONGOHQ_URL || 'mongodb://@localhost:27017/chat',
   db = mongoose.connect(dbUrl, {safe: true}),
   everyauth = require('everyauth');
 //  collections = {
@@ -54,7 +54,7 @@ everyauth.everymodule.findUserById(function(user, callback){
 
 
 var app = express();
-app.locals.appTitle = 'jsNode';
+app.locals.appTitle = 'nodeChat';
 
 //mongoos 사용시 model 비교
 app.use(function(req, res, next) {

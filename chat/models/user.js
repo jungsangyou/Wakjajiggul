@@ -11,9 +11,8 @@ var userSchema = new mongoose.Schema({
 	      'Invalid email'
 	    ]
 	},
-	userName : String,
-	age : Number,
-	orgName : String,
+	name : String,
+	nickname : String,
 	password: String,
 	admin: {
 	    type: Boolean,
