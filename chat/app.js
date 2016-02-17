@@ -54,7 +54,7 @@ everyauth.everymodule.findUserById(function(user, callback){
 
 
 var app = express();
-app.locals.appTitle = 'nodeChat';
+app.locals.appTitle = 'chat';
 
 //mongoos 사용시 model 비교
 app.use(function(req, res, next) {
