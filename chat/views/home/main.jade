@@ -1,0 +1,12 @@
+extends ../layout
+block header
+	script(type="text/javascript" src="/js/chat/chat.js")
+	script.
+		var loginId = "#{user.loginId}";
+block content
+	div.chat
+		div.chatList
+			ul#chatList
+		textarea
+		div#send.btn SEND
+	
