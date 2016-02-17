@@ -1,1 +1,1 @@
-mongoimport --db mynode --collection users --file ./db/users.json --jsonArray
+mongoimport --db chat --collection users --file ./db/users.json --jsonArray
