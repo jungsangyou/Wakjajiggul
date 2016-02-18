@@ -1,3 +1,7 @@
+/**
+ * chat.js
+ * chat fn 
+ */
 var socket = io.connect('http://chathost:3000/');
 socket.on('changeUsers', function (data){
 	$("#chatName").html('');
