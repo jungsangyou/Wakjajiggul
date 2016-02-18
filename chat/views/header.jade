@@ -1,3 +1,9 @@
+script.
+	$(document).ready(function(){
+		$(".util_area > ul > li > a").eq(0).click(function(){
+			socket.emit('disconnect', {});
+		});
+	})
 div.logo_area
 	a(href="/home/main/")
 		img#mainLogoCic.logo_node(src="/img/cmm/logo_node.png"  border="0"  style="cursor:pointer")

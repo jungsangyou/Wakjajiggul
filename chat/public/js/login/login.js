@@ -16,11 +16,12 @@ $(document).ready(function(){
 		    success: function(data, status, xhr) {
 		    	console.log(data);
 		    	if(data != null && data != ''){
-		    		if(data.admin){
-		    			location.replace('/admin');
-		    		}else{
-		    			location.replace('/home/main');
-		    		}
+		    		location.replace('/home/main');
+//		    		if(data.admin){
+//		    			location.replace('/admin');
+//		    		}else{
+//		    			location.replace('/home/main');
+//		    		}
 		    	}else{
 		    		alert("ID 또는 PASSWORD를 확인해주세요");
 		    	}

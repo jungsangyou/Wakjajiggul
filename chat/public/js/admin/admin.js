@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	$("#submitBt").click(function(){
+	$("#submitBt").unbind('click').click(function(){
 		var count = 0;
 		
 		for(var i=0; i<$("[checkOption]").length; i++){
@@ -11,9 +11,9 @@ $(document).ready(function(){
 		}
 		var param = { 
 					  loginId: $("#loginId").val(),
-					  userName: $("#userName").val(),
+					  name: $("#userName").val(),
+					  nickname: $("#nickname").val(),
 					  age: $("#age").val(),
-					  orgName: $("#orgName").val(),
 					  password: $("#password").val(),
 					  admin: $("#adminChk").val() 
 		}

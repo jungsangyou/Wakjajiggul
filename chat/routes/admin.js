@@ -4,9 +4,8 @@
 exports.admin = function(req, res, next) {
 	var userData = {
 			loginId : req.session.user.loginId
-			,userName : req.session.user.userName
+			,name : req.session.user.name
 	}
-	console.log(userData);
 	res.render('admin/admin', {user: userData});
 };
 

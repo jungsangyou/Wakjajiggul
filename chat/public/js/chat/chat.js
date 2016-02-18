@@ -1,12 +1,27 @@
-var socket = io.connect('http://jslocalhost:3000/');
-console.log(io);
+var socket = io.connect('http://chathost:3000/');
+socket.on('changeUsers', function (data){
+	$("#chatName").html('');
+	for(var i in data){
+		if($("#chatName").find('li[loginId="'+data[i].loginId+'"]').eq(0).length > 0){
+			var cnt = Number($("#chatName").find('li[loginId="'+data[i].loginId+'"]').eq(0).find('a > em').eq(0).attr('count'));
+			$("#chatName").find('li[loginId="'+data[i].loginId+'"]').eq(0).find('a > em').html(' ('+ (cnt+1) + ')');
+		}else{
+			if(loginId == data[i].loginId){
+				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a class="on">'+(Number(i)+1)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
+			}else{
+				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a>'+(Number(i)+1)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
+			}
+			
+		}
+	}
+});
+
 socket.on('receive', function (data) {
-	console.log(data);
 	var message = data.message.replace(/\n/gi,'<br>');
 	if(data.loginId == loginId){
-		$("#chatList").append('<li class="right"><em style="font-size:15px;">'+data.loginId+" : </em><br>"+message+'</li>');
+		$("#chatList").append('<li class="right"><em style="font-size:15px;">'+data.nickname+" : </em><br>"+message+'</li>');
 	}else{
-		$("#chatList").append('<li class="left"><em style="font-size:15px;">'+data.loginId+" : </em><br>"+message+'</li>');
+		$("#chatList").append('<li class="left"><em style="font-size:15px;">'+data.nickname+" : </em><br>"+message+'</li>');
 	}
 	$(".chatList").scrollTop($("#chatList").height() + 50);
 });
@@ -18,7 +33,7 @@ $(document).ready(function(){
 			return ;
 		}
 		$(".chat > textarea").val('');
-		socket.emit('sendMessage', {message: text, loginId : loginId});
+		socket.emit('sendMessage', {message: text, loginId : loginId, nickname : nickname});
 	});
 	
 	$(".chat > textarea").keydown(function(e){
