@@ -1,15 +1,20 @@
 var socket = io.connect('http://chathost:3000/');
 socket.on('changeUsers', function (data){
 	$("#chatName").html('');
+	var num = 0;
 	for(var i in data){
+		if(data[i].loginId == "" || data[i].loginId == null ){
+			continue;
+		}
+		num ++;
 		if($("#chatName").find('li[loginId="'+data[i].loginId+'"]').eq(0).length > 0){
 			var cnt = Number($("#chatName").find('li[loginId="'+data[i].loginId+'"]').eq(0).find('a > em').eq(0).attr('count'));
 			$("#chatName").find('li[loginId="'+data[i].loginId+'"]').eq(0).find('a > em').html(' ('+ (cnt+1) + ')');
 		}else{
 			if(loginId == data[i].loginId){
-				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a class="on">'+(Number(i)+1)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
+				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a class="on">'+(num)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
 			}else{
-				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a>'+(Number(i)+1)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
+				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a>'+(num)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
 			}
 			
 		}
