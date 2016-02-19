@@ -2,7 +2,7 @@
  * chat.js
  * chat fn 
  */
-var socket = io.connect('http://localhost:3000/');
+var socket = io.connect('http://wakjalocalhost:3000/');
 socket.on('changeUsers', function (data){
 	$("#chatName").html('');
 	var num = 0;
