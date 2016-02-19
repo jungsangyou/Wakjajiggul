@@ -9,13 +9,13 @@ var express = require('express'),
   dbUrl = process.env.MONGOHQ_URL || 'mongodb://@' + GLOBAL.config.db.url,
   db = mongoose.connect(dbUrl, {safe: true}),
   everyauth = require('everyauth'),
-  global = { user : {} },
   session = require('express-session'),
   logger = require('morgan'),
   errorHandler = require('errorhandler'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  methodOverride = require('method-override');
+  methodOverride = require('method-override'),
+  customModules = require('./custom_modules');
 
 //everyAuth With google access 
 everyauth.google
@@ -74,87 +74,17 @@ app.use(function(req, res, next){
 	next();
 });
 
-var auth_admin = function(req, res, next) {
-	console.log(req.session);
-	global.user = req.session.user;
-	if(req.session && req.session.user && req.session.admin) return next();
-	else return res.redirect('/login');
-}
-
-var auth_user = function(req, res, next) {
-	global.user = req.session.user;
-	if(req.session && req.session.user) return next(); 
-	else return res.redirect('/login');
-}
-
-var chkSession = function(req, res, next) {
-	if(req.session) return next();
-	else return res.redirect('/login');
-}
-
 //development only
 if ('development' == app.get('env')) {
 	app.use(errorHandler());
 }
 
-// Pages and routes
-app.get('/', function(req, res) {
-	res.redirect('login');
-});
-
-//redirect path
-app.get('/admin', auth_admin, routes.admin.admin); //admin
-app.get('/admin/add', auth_admin, routes.admin.add);
-app.get('/login', routes.login.login);
-app.get('/logout',  routes.login.logout);
-app.get('/home/main', auth_user, routes.home.main); //main (chat)
-
-// REST API routes
-app.get('/api/authenticate/', routes.login.authenticate);
-app.post('/api/addUser/', auth_admin, routes.user.add);
-
-app.all('*', function(req, res) {
-	res.send(404);
-});
+//router setting
+customModules.routes(app, routes);
 
 //socket setting & custom fn add
-var socketUsers = new Array();
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
-io.sockets.on('connection', function(socket){
-	if(globalCheck(socket.id)){
-		var socketUser = {
-				id : socket.id
-			  , loginId : global.user.loginId
-			  , user : global.user 
-		}
-		socketUsers.push(socketUser);
-		io.sockets.emit('changeUsers', socketUsers);
-	};
-	socket.on('sendMessage', function(data){
-		io.sockets.emit('receive', data);
-	});
-	socket.on('disconnect', function(data){
-		var i = socketMemberCheck(socket.id);
-		socketUsers.splice(i, 1);
-		io.sockets.emit('changeUsers', socketUsers);
-	});
-});
-
-var globalCheck = function(id){
-	if(global.user && global.user.loginId) global.user.socketId = id; return true;
-}
-
-var socketMemberCheck = function(id){
-	var n = -1;
-	for(var i in socketUsers){
-		if(socketUsers[i].id == id){
-			n = i;
-			break;
-		}
-	}
-	return n;
-}
+customModules.socket(server);
 
 // server setting
 var boot = function () {
@@ -162,9 +92,11 @@ var boot = function () {
 		console.info('Express server listening on port ' + app.get('port'));
 	});
 }
+
 var shutdown = function() {
 	server.close();
 }
+
 if (require.main === module) {
 	boot();
 } else {
