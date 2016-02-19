@@ -1,8 +1,9 @@
 /**
  * chat.js
- * chat fn 
  */
-var socket = io.connect('http://wakjalocalhost:3000/');
+var protocol = location.protocol + '//';
+var host = location.host + '/';
+var socket = io.connect(protocol + host);
 socket.on('changeUsers', function (data){
 	$("#chatName").html('');
 	var num = 0;
@@ -20,7 +21,6 @@ socket.on('changeUsers', function (data){
 			}else{
 				$("#chatName").append('<li loginId="'+data[i].loginId+'"><a>'+(num)+ '. ' + data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
 			}
-			
 		}
 	}
 });

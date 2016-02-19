@@ -104,7 +104,7 @@ app.get('/', function(req, res) {
 app.get('/admin', auth_admin, routes.admin.admin); //admin
 app.get('/admin/add', auth_admin, routes.admin.add);
 app.get('/login', routes.login.login);
-app.get('/logout',  routes.login.logout);
+app.get('/logout', routes.login.logout);
 app.get('/home/main', auth_user, routes.home.main); //main (chat)
 
 // REST API routes
@@ -133,25 +133,30 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('receive', data);
 	});
 	socket.on('disconnect', function(data){
-		var i = socketMemberCheck(socket.id);
-		socketUsers.splice(i, 1);
+		if(globalCheck(socket.id)){
+			socketMemberCheck(global.user.loginId);
+		}
 		io.sockets.emit('changeUsers', socketUsers);
 	});
 });
 
 var globalCheck = function(id){
-	if(global.user && global.user.loginId) global.user.socketId = id; return true;
+	if(typeof global.user != "undefined" && typeof global.user.loginId != "undefined" ){
+		global.user.socketId = id; 
+		return true;
+	}else{
+		return false;
+	}
 }
 
 var socketMemberCheck = function(id){
-	var n = -1;
+	var nA = new Array();
 	for(var i in socketUsers){
-		if(socketUsers[i].id == id){
-			n = i;
-			break;
+		if(socketUsers[i].loginId != id){
+			nA.push(socketUsers[i]);
 		}
 	}
-	return n;
+	socketUsers = nA;
 }
 
 // server setting
