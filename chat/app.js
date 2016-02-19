@@ -1,10 +1,12 @@
+GLOBAL.config = require('./resource/config/config.json');
+
 var express = require('express'),
   routes = require('./routes'),
   http = require('http'),
   path = require('path'),
   mongoose = require('mongoose'),
   models = require('./models'),
-  dbUrl = process.env.MONGOHQ_URL || 'mongodb://@localhost:27017/chat',
+  dbUrl = process.env.MONGOHQ_URL || 'mongodb://@' + GLOBAL.config.db.url,
   db = mongoose.connect(dbUrl, {safe: true}),
   everyauth = require('everyauth'),
   global = { user : {} },
@@ -56,7 +58,7 @@ app.use(function(req, res, next) {
 	req.models = models;
 	return next();
 });
-app.set('port',  process.env.PORT || 3000);
+app.set('port',  process.env.PORT || GLOBAL.config.server.port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(bodyParser.json());

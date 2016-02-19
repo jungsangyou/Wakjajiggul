@@ -8,6 +8,8 @@ html
 		script(type="text/javascript" src="/js/lib/jquery-1.8.3.min.js")
 		script(type="text/javascript" src="/js/cmm/menu.js")
 		script(src="/socket.io/socket.io.js")
+		script.
+			var config = !{JSON.stringify(global.config)};
 		block header
 	body
 		a(href="#" class="btnTop fr" id="TopForPaging" style="position:fixed; right:60px; bottom:47px; display: none; z-index: 49;")
