@@ -23,6 +23,8 @@ module.exports = function(app, routes){
 	// REST API routes
 	app.get('/api/authenticate/', routes.login.authenticate);
 	app.post('/api/addUser/', auth_admin, routes.user.add);
+	app.get('/api/chat/list/', routes.home.list);
+	app.post('/api/chat/add/', routes.home.add);
 	app.all('*', function(req, res) {
 		res.send(404);
 	});
