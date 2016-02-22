@@ -1,12 +1,24 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema
+	autoIncrement = require('mongoose-auto-increment');
 
-var roomSchema = new mongoose.Schema({
-	roomId : {
-	    type     : String,
-	    required : true
-	},
+var connection = mongoose.createConnection("mongodb://" + GLOBAL.config.db.url);
+
+autoIncrement.initialize(connection);
+
+var roomSchema = new Schema({
 	title : String,
-	regDt : String
+	regDt : {
+	    type     : Date,
+	    default  : Date.now
+	}
+});
+
+roomSchema.plugin(autoIncrement.plugin, {
+    model: 'Room',
+    field: 'roomId',
+    startAt: 1,
+    incrementBy: 1
 });
 
 module.exports = mongoose.model('Room', roomSchema, 'rooms');

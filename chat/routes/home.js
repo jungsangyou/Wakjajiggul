@@ -41,11 +41,17 @@ exports.add = function(req, res, next) {
 	var title = param.title;
 	var loginIds = param.loginIds;
 	
-	req.models.Room.create(title, function(error, addResponse) {
+	req.models.Room.create({title : title}, function(error, addResponse) {
 	    if (error) return next(error);
-	    req.models.RoomUser.create(loginIds, function(error, addResponse) {
-		    if (error) return next(error);
-		    res.send(addResponse);
-		});
+	    
+	    var room = addResponse;
+	    for (var i in loginIds) {
+	    	req.models.RoomUser.create({roomId : room.roomId, 
+	    								loginId : loginIds[i]}, function(error, addResponse) {
+			    if (error) return next(error);
+			});
+	    }
+	    
+	    res.send(room);
 	});
 };

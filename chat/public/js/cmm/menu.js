@@ -22,11 +22,6 @@ $(document).ready(function(){
 		var title = 'chat test';
 		var loginIds = ['jungsangyou@gmail.com', 'ej8486.choi@gmail.com'];
 		
-		if(lgnId == null || password == null || lgnId == '' || password == ''){
-			alert("ID 또는 PASSWORD를 입력해 주세요 ");
-			return;
-		}
-		
 		$.ajax({
 		    url: '/api/chat/add/',
 		    type: 'POST',
