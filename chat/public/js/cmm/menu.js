@@ -6,23 +6,33 @@ $(document).ready(function(){
 	$("#finishRoom").unbind('click').click(function(){
 		var title = $("#roomName").val();
 		var loginIds = new Array();
-		var socketIds = new Array();
+		var users = new Array();
+		var _ids = new Array();
 		for(var i=0; i<$("#socketUserList > li[check=true]").length; i++){
-			loginIds.push($("#socketUserList > li[check=true]").eq(i).attr('loginId'));
-			socketIds.push($("#socketUserList > li[check=true]").eq(i).attr('socketId'));
+			
+			var loginId = $("#socketUserList > li[check=true]").eq(i).attr('loginId');
+			var _id = $("#socketUserList > li[check=true]").eq(i).attr('_id');
+			var user = {
+				_id : _id
+			   ,loginId : loginId
+			};
+			users.push(user);
+			loginIds.push(loginId);
+		}
+		if(title == '' || title == null || loginIds.length == 0){
+			return;
 		}
 		var roomId = '1';
-//		socket.emit('joinroom', {room: roomId, loginIds : loginIds, socketIds :socketIds});
 		$("#roomList").show();
 		$("#addRoomDiv").hide();
 		
 		$.ajax({
 		    url: '/api/room/add/',
-		    data : {title : title, loginIds : loginIds},
+		    data : {title : title, users : users},
 		    type: 'POST',
 		    success: function(data, status, xhr) {
+		    	socket.emit('createRoom', {loginIds: loginIds});
 		    	getChatList();
-		    	var joinRoomId = data.roomId;
 		    }
 		});
 	});
@@ -33,13 +43,14 @@ $(document).ready(function(){
 		    type: 'GET',
 		    success: function(data, status, xhr) {
 		    	var innerHtml = '';
-
+		    	console.log(data);
 		    	$.each(data, function(index, room) {
-		    		console.log(room.title);
+		    		console.log(room);
 		    		innerHtml += '<li class="menu01 on" id="' + room.roomId + '" roomOk="true" ><a><em><span>' + room.title + '</span></em></a>';
-		    		if (index == 0) {
-		    			innerHtml += '<div class="submenu"><ul id="chatName" calss="type2"><li><a>default</a></li></ul></div><em class="shadow"></em>';
-		    		}
+		    		innerHtml += '<div class="submenu"><ul id="chatName" calss="type2"><li><a>default</a></li></ul></div><em class="shadow"></em>';
+//		    		if (data.loginIds.length > 0) {
+//		    			innerHtml += '<div class="submenu"><ul id="chatName" calss="type2"><li><a>default</a></li></ul></div><em class="shadow"></em>';
+//		    		}
 		    		innerHtml += '</li>';
 		    	});
 		    	
@@ -49,7 +60,7 @@ $(document).ready(function(){
 		    	innerHtml += '</span></em></a></li>';
 		    	
 		    	$("#roomList > ul.menu").html(innerHtml);
-		    	
+		    	$(".submenu").hide();
 		    	//add event 추가 
 		    	$("#addRoom").unbind('click').click(function(){
 		    		$("#roomList").hide();
@@ -57,6 +68,9 @@ $(document).ready(function(){
 		    	});
 //		    	
 		    	$("li[roomOk=true]").unbind('click').click(function(){
+		    		$(".submenu").hide();
+		    		$(this).find('.submenu').show();
+		    		
 		    		var roomId = $(this).attr('id');
 		    		gRoomId = roomId;
 		    		$("#content").load('/home/chat/', roomId, function(){

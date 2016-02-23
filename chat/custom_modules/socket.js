@@ -15,7 +15,7 @@ module.exports = function(server){
 		
 		socket.on('joinroom', function(data){
 	        socket.join(data.room);
-	        socket.set(data.room, data.room,function() {
+	        socket.set('room', data.room,function() {
 	            var room = data.room;
 	         // Create Room
                 if (rooms.room == undefined) {
@@ -25,22 +25,36 @@ module.exports = function(server){
                 }
                 // Store current user's nickname and socket.id to MAP
                 rooms.room.socket_ids[global.user.loginId] = socket.id
-                
-                
 	        });
-	 
+	        
 	    });
+		
 		socket.on('sendMessage', function(data){
 			var room = data.roomId;
         	io.sockets.in(room).emit('receive', data);
 		});
+        
+        socket.on('createRoom', function(data){
+			var loginIds = data.loginIds;
+			
+			for(var i in loginIds){
+				for(var j in socketUsers){
+					if(loginIds[i] == socketUsers[j].loginId){
+						io.sockets.sockets[socketUsers[j].id].emit('receiveRoom', data);
+						break;
+					}
+				}
+			}
+		});
+		
+		
 		socket.on('disconnect', function(data){
 			//room delete 
 			io.sockets.emit('changeUsers', socketUsers);
-			socket.get('room',function(err,room) {
-	            if(err) throw err;
-	            if(room != undefined
-	                && rooms.room != undefined){
+			socket.get('room',function(err, room) {
+	            if(room != undefined && rooms.room != undefined){
+	            	console.log('roooooooooooooooooooooooom', room);
+	            	socket.leave(room);
 	            	delete rooms.room.socket_ids[global.user.loginId];
 	            }
 	        });
