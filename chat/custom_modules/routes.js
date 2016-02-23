@@ -27,6 +27,8 @@ module.exports = function(app, routes){
 	app.get('/api/room/', routes.room.info);
 	app.get('/api/room/list/', routes.room.list);
 	app.post('/api/room/add/', routes.room.add);
+	app.get('/api/chat/list/', routes.chat.list);
+	app.post('/api/chat/add/', routes.chat.add);
 	app.all('*', function(req, res) {
 		res.send(404);
 	});

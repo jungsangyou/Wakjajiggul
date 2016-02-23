@@ -19,41 +19,29 @@ exports.info = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-	req.models.RoomUser.find({loginId: req.session.user.loginId}, function(error, roomUsers) {
-	    if (error) return next(error);
-	    if (roomUsers != null) {
-	    	var roomIds = [];
-			for (var i in roomUsers) {
-				roomIds.push({roomId : roomUsers[i].roomId});
-			}
-			console.log('roomIds>>>>>' + JSON.stringify(roomIds));
-			
-			req.models.Room.find({ $or: roomIds }, function(error, room) {
-			    if (error) return next(error);
-			    if (room != null) {
-			    	res.send(room);
-			    }
-			});
-	    }
-	});
+	req.models.Room.find()
+				   .populate({
+					   path: 'users',
+					   match: { loginId : req.session.user.loginId }
+				   })
+				   .exec(function(error, rooms) {
+						if (error) return next(error);
+						if (rooms != null) {
+							console.log('rooms>>>>>' + rooms);
+							res.send(rooms);
+						}
+				   });
 };
 
 exports.add = function(req, res, next) {
 	var param = req.body;
 	var title = param.title;
-	var loginIds = param.loginIds;
-	
-	req.models.Room.create({title : title}, function(error, addResponse) {
+	var _ids = param._ids;
+
+	var room = new req.models.Room({ title: title, users: _ids });
+	room.save(function(error, room) {
 	    if (error) return next(error);
-	    
-	    var room = addResponse;
-	    for (var i in loginIds) {
-	    	req.models.RoomUser.create({roomId : room.roomId, 
-	    								loginId : loginIds[i]}, function(error, addResponse) {
-			    if (error) return next(error);
-			});
-	    }
-	    
+	    console.log(room);
 	    res.send(room);
 	});
 };

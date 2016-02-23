@@ -1,11 +1,12 @@
 var roomUserSchema = new Schema({
 	roomId : {
-	    type     : Number,
-	    required : true
+	    type : Number,
+	    field: 'roomId',
+	    ref  : 'Room'
 	},
 	loginId : {
-	    type     : String,
-	    required : true
+		type : String,
+	    ref  : 'User'
 	}
 });
 

@@ -1,10 +1,16 @@
 var chatSchema = new Schema({
-	roomId  : Number,
-	loginId : String,
-	text    : String,
-	regDt : {
-	    type     : Date,
-	    default  : Date.now
+	roomId    : {
+	    type : Number,
+	    ref  : 'Room'
+	},
+	_register : {
+	    type : Schema.Types.ObjectId,
+	    ref  : 'User'
+	},
+	text      : String,
+	regDt     : {
+	    type    : Date,
+	    default : Date.now
 	}
 });
 

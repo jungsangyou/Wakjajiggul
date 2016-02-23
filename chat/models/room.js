@@ -3,7 +3,11 @@ var roomSchema = new Schema({
 	regDt : {
 	    type     : Date,
 	    default  : Date.now
-	}
+	},
+	users : [{
+	    type : Schema.Types.ObjectId,
+	    ref  : 'User'
+	}]
 });
 
 roomSchema.plugin(autoIncrement.plugin, {

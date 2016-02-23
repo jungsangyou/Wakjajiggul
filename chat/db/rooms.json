@@ -1,13 +1,16 @@
 [{roomId: 1,
   title: 'Room 1',
-  regDt: '20160222'
+  regDt: '20160222',
+  users:[]
  },
  {roomId: 2,
   title: 'Room 2',
-  regDt: '20160222'
+  regDt: '20160222',
+  users:[]
  },
  {roomId: 3,
   title: 'Room 3',
-  regDt: '20160222'
+  regDt: '20160222',
+  users:[]
  }
 ]
