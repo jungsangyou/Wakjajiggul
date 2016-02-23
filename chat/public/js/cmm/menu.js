@@ -9,14 +9,9 @@ $(document).ready(function(){
 		var users = new Array();
 		var _ids = new Array();
 		for(var i=0; i<$("#socketUserList > li[check=true]").length; i++){
-			
 			var loginId = $("#socketUserList > li[check=true]").eq(i).attr('loginId');
 			var _id = $("#socketUserList > li[check=true]").eq(i).attr('_id');
-			var user = {
-				_id : _id
-			   ,loginId : loginId
-			};
-			users.push(user);
+			_ids.push(_id);
 			loginIds.push(loginId);
 		}
 		if(title == '' || title == null || loginIds.length == 0){
@@ -28,7 +23,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 		    url: '/api/room/add/',
-		    data : {title : title, users : users},
+		    data : {title : title, _ids : _ids},
 		    type: 'POST',
 		    success: function(data, status, xhr) {
 		    	socket.emit('createRoom', {loginIds: loginIds});

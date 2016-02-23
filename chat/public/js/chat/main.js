@@ -17,9 +17,9 @@ socket.on('changeUsers', function (data){
 			$("#socketUserList").find('li[loginId="'+data[i].loginId+'"]').eq(0).find('a > em').html(' ('+ (cnt+1) + ')');
 		}else{
 			if(loginId == data[i].loginId){
-				$("#socketUserList").append('<li _id="'+data[i].user.id+'" socketId="'+data[i].id+'" loginId="'+data[i].loginId+'"><a class="on">'+ data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
+				$("#socketUserList").append('<li _id="'+data[i].user._id+'" socketId="'+data[i].id+'" loginId="'+data[i].loginId+'"><a class="on">'+ data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
 			}else{
-				$("#socketUserList").append('<li _id="'+data[i].user.id+'" socketId="'+data[i].id+'" loginId="'+data[i].loginId+'"><a>'+ data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
+				$("#socketUserList").append('<li _id="'+data[i].user._id+'" socketId="'+data[i].id+'" loginId="'+data[i].loginId+'"><a>'+ data[i].user.nickname + '<em count=1 > (1) </em></a></li>');
 			}
 		}
 	}
