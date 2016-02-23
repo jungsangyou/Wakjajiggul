@@ -135,6 +135,7 @@ nav.lnb_wrap ul.menu > li.on > a {color:#fff;}
 nav.lnb_wrap ul.menu > li > a:after {display:inline-block; content:""; height:100%; vertical-align:middle;}
 nav.lnb_wrap ul.menu > li > a em {display:inline-block; vertical-align:middle;}
 nav.lnb_wrap ul.menu > li > a em span {display:inline-block; display:-webkit-box; overflow:hidden; max-height:36px; font-size:16px; line-height:18px; vertical-align:middle; word-break:break-all; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
+nav.lnb_wrap ul.menu > li > a > input {height:42px; width:195px; margin-left:-24px;font-size"16px;"}
 
 nav.lnb_wrap ul.menu > li .submenu {background-color:#f0f0f2;padding:12px 9px 10px 22px; margin:-1px 0 0 -10px; border-left:10px solid #454964;}
 nav.lnb_wrap ul.menu > li .submenu > ul {overflow-y:auto; max-height:150px;}
@@ -154,6 +155,5 @@ nav.lnb_wrap ul.menu > li .submenu > ul.type5 > li.on a {font-weight:bold;color:
 .chat textarea {width:542px; height:100px; margin-right:5px; border:1px solid #dcdcdc; outline:none; font-size:20px;}
 .chat .btn {height:54px; display:inline-block; width:84px; padding:0 10px; text-align:center; color:#fff; background:#6A246B; font-size:14px; line-height:0; border-bottom:1px solid #373a50; vertical-align:top; word-break:break-all; padding-top:50px; cursor:pointer}
 
-
-
-
+.socket > .title {margin-top:20px; margin-bottom:20px; font-size:23px; line-height:26px;}
+ul.socketUserList > li a {color:#9298a1; font-size:13px; line-height:26px;}

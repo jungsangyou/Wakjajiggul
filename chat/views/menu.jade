@@ -3,16 +3,14 @@ nav.lnb_wrap(style="height: 922px;")
 	div.profile_area
 		div.img_area
 		p.name
-	ul.menu 
-		block menu
-			li.menu01.on
+	div#roomList(style="display:block")
+		ul.menu 
+	div#addRoomDiv(style="display:none")
+		ul.menu
+			li.menu01
 				a
+					input#roomName(type="text" value="")
+			li.menu01
+				a#finishRoom
 					em
-						span Room1
-				div.submenu
-					ul#chatName.type2
-						li
-							a 호잇
-				em.shadow
-	ul
-		input(id="addRoom" type="button" value="Add Room")
+						span FINISH

@@ -14,6 +14,11 @@ exports.main = function(req, res, next) {
 	res.render('home/main', {user: userData});
 };
 
+exports.chat = function(req, res, next) {
+	var roomId = req.query.roomId;
+	console.log('chat', roomId);
+	res.render('home/chat', {roomId: roomId});
+};
 
 exports.list = function(req, res, next) {
 	req.models.RoomUser.find({loginId: req.session.user.loginId}, function(error, result) {
@@ -55,3 +60,5 @@ exports.add = function(req, res, next) {
 	    res.send(room);
 	});
 };
+
+
