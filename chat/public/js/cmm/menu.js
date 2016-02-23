@@ -3,25 +3,6 @@ $(document).ready(function(){
 	
 	getChatList();
 	
-//	$("#addRoom").click(function(){
-//		var title = 'chat test';
-//		var loginIds = ['jungsangyou@gmail.com', 'ej8486.choi@gmail.com'];
-//		
-//		if(lgnId == null || password == null || lgnId == '' || password == ''){
-//			alert("ID 또는 PASSWORD를 입력해 주세요 ");
-//			return;
-//		}
-//		$.ajax({
-//		    url: '/api/chat/add/',
-//		    type: 'POST',
-//		    data : {title : title, loginIds : loginIds},
-//		    success: function(data, status, xhr) {
-//		    	console.log(data);
-//		    }
-//		 });
-//		
-//	});
-	
 	$("#finishRoom").unbind('click').click(function(){
 		var title = $("#roomName").val();
 		var loginIds = new Array();
@@ -36,7 +17,7 @@ $(document).ready(function(){
 		$("#addRoomDiv").hide();
 		
 		$.ajax({
-		    url: '/api/chat/add/',
+		    url: '/api/room/add/',
 		    data : {title : title, loginIds : loginIds},
 		    type: 'POST',
 		    success: function(data, status, xhr) {
@@ -48,7 +29,7 @@ $(document).ready(function(){
 	
 	function getChatList(){
 		$.ajax({
-		    url: '/api/chat/list/',
+		    url: '/api/room/list/',
 		    type: 'GET',
 		    success: function(data, status, xhr) {
 		    	var innerHtml = '';

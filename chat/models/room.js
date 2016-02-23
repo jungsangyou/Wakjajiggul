@@ -1,11 +1,3 @@
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema
-	autoIncrement = require('mongoose-auto-increment');
-
-var connection = mongoose.createConnection("mongodb://" + GLOBAL.config.db.url);
-
-autoIncrement.initialize(connection);
-
 var roomSchema = new Schema({
 	title : String,
 	regDt : {

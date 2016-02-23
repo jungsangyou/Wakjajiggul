@@ -1,6 +1,4 @@
-var mongoose = require('mongoose');
-
-var userSchema = new mongoose.Schema({
+var userSchema = new Schema({
 	loginId : {
 	    type: String,
 	    required: true,

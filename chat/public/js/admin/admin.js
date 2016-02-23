@@ -18,7 +18,7 @@ $(document).ready(function(){
 					  admin: $("#adminChk").val() 
 		}
 		$.ajax({
-		    url: '/api/addUser/',
+		    url: '/api/user/add/',
 		    type: 'POST',
 		    data : param,
 		    success: function(data, status, xhr) {

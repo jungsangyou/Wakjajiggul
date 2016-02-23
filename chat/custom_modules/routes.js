@@ -23,9 +23,10 @@ module.exports = function(app, routes){
 	app.get('/home/chat', auth_user, routes.home.chat); //main (chat)
 	// REST API routes
 	app.get('/api/authenticate/', routes.login.authenticate);
-	app.post('/api/addUser/', auth_admin, routes.user.add);
-	app.get('/api/chat/list/', routes.home.list);
-	app.post('/api/chat/add/', routes.home.add);
+	app.post('/api/user/add/', auth_admin, routes.user.add);
+	app.get('/api/room/', routes.room.info);
+	app.get('/api/room/list/', routes.room.list);
+	app.post('/api/room/add/', routes.room.add);
 	app.all('*', function(req, res) {
 		res.send(404);
 	});

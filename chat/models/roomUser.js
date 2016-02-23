@@ -1,8 +1,6 @@
-var mongoose = require('mongoose');
-
-var roomUserSchema = new mongoose.Schema({
+var roomUserSchema = new Schema({
 	roomId : {
-	    type     : String,
+	    type     : Number,
 	    required : true
 	},
 	loginId : {
