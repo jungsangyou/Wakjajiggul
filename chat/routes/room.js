@@ -4,22 +4,23 @@ exports.info = function(req, res, next) {
 
 	req.models.Room.findOne({roomId : roomId})
 				   .populate('users')
-				   .exec(function(error, rooms) {
+				   .exec(function(error, room) {
 						if (error) return next(error);
-						if (rooms !== null) {
-							console.log('rooms>>>>>' + rooms);
-							res.send(rooms);
+						if (room !== null) {
+							res.send(room);
 						}
 				   });
 };
 
 exports.list = function(req, res, next) {
-	req.models.Room.find({ users : {'$in' : [req.session.user._id]} }, function(error, rooms) {
-		if (error) return next(error);
-		if (rooms !== null) {
-			res.send(rooms);
-		}
-	});
+	req.models.Room.find({ users : {'$in' : [req.session.user._id]} })
+				   .populate('users')
+				   .exec(function(error, rooms) {
+						if (error) return next(error);
+						if (rooms !== null) {
+							res.send(rooms);
+						}
+				   });
 };
 
 exports.add = function(req, res, next) {
