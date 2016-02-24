@@ -1,11 +1,16 @@
 exports.list = function(req, res, next) {
-	req.models.Chat.find({}, function(error, result) {
-		if (error) return next(error);
-		if (result !== null) {
-			console.log('chat>>>>>' + result);
-			res.send(result);
-		}
-   });
+	var param = req.query;
+	var roomId = param.roomId;
+	
+	req.models.Chat.find({ roomId: roomId })
+				   .populate('_register')
+				   .exec(function(error, result) {
+						if (error) return next(error);
+						if (result !== null) {
+							console.log('chat>>>>>' + result);
+							res.send(result);
+						}
+				   });
 };
 
 exports.add = function(req, res, next) {
