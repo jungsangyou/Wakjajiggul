@@ -1,9 +1,5 @@
-extends ../layout
 block header
-	script(type="text/javascript" src="/js/room/main.js")
-	script.
-		var loginId = "#{user.loginId}";
-		var nickname = "#{user.nickname}";
+	script(type="text/javascript" src="/js/room/room.js")
 block content
 	div#socket.socket
 		div.title

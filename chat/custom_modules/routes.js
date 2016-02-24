@@ -20,6 +20,7 @@ module.exports = function(app, routes){
 	app.get('/login', routes.login.login);
 	app.get('/logout', routes.login.logout);
 	app.get('/home/main', auth_user, routes.home.main); //main 
+	app.get('/home/room', auth_user, routes.home.room); //main (room)
 	app.get('/home/chat', auth_user, routes.home.chat); //main (chat)
 	// REST API routes
 	app.get('/api/authenticate/', routes.login.authenticate);

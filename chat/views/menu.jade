@@ -4,7 +4,12 @@ nav.lnb_wrap(style="height: 922px;")
 		div.img_area
 		p.name
 	div#roomList(style="display:block")
-		ul.menu 
+		ul.menu(style="height:50px")
+			li.menu01(roomOk="false")
+				a#addRoom
+					em
+						span(roomId="") ADD +
+		ul#roomUlList.menu 
 	div#addRoomDiv(style="display:none")
 		ul.menu
 			li.menu01

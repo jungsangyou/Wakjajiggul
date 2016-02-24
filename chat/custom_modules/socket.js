@@ -36,17 +36,15 @@ module.exports = function(server){
         
         socket.on('createRoom', function(data){
 			var loginIds = data.loginIds;
-			
 			for(var i in loginIds){
 				for(var j in socketUsers){
 					if(loginIds[i] == socketUsers[j].loginId){
-						io.sockets.sockets[socketUsers[j].id].emit('receiveRoom', data);
+						io.sockets.socket(socketUsers[j].id).emit('receiveRoom', data);
 						break;
 					}
 				}
 			}
 		});
-		
 		
 		socket.on('disconnect', function(data){
 			//room delete 

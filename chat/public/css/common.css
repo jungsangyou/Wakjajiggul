@@ -110,7 +110,7 @@ nav.lnb_wrap .profile_area .name {font-size:13px; margin-left:20px;}
 nav.lnb_wrap .profile_area .name span {display:block;margin-bottom:8px;}
 nav.lnb_wrap .profile_area .name span > em {font-size:13px;}
 nav.lnb_wrap .profile_area .name span.name1 {display:block;width:80px;margin-bottom:5px;}
-nav.lnb_wrap ul.menu {background:url(/img/menu/menu_bgR.gif) right 0 no-repeat; padding-right:10px;}
+nav.lnb_wrap ul.menu {background:url(/img/menu/menu_bgR.gif) right 0 no-repeat; padding-right:10px; height: 300px; overflow-y: overlay}
 nav.lnb_wrap ul.menu > li {position:relative;display:block;}
 nav.lnb_wrap ul.menu > li:first-child a {border-top:1px solid #e9ebf2; height:48px;}
 nav.lnb_wrap ul.menu > li em.shadow {display:none;}

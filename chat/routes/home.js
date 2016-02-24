@@ -6,7 +6,11 @@ exports.main = function(req, res, next) {
 			,nickname : req.session.user.nickname
 	}
 	console.log(userData);
-	res.render('home/room', {user: userData});
+	res.render('home/main', {user: userData});
+};
+
+exports.room = function(req, res, next) {
+	res.render('home/room');
 };
 
 exports.chat = function(req, res, next) {
