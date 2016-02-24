@@ -24,11 +24,12 @@ module.exports = function(app, routes){
 	// REST API routes
 	app.get('/api/authenticate/', routes.login.authenticate);
 	app.post('/api/user/add/', auth_admin, routes.user.add);
-	app.get('/api/room/', routes.room.info);
-	app.get('/api/room/list/', routes.room.list);
-	app.post('/api/room/add/', routes.room.add);
-	app.get('/api/chat/list/', routes.chat.list);
-	app.post('/api/chat/add/', routes.chat.add);
+	app.get('/api/room/', auth_user, routes.room.info);
+	app.get('/api/room/list/', auth_user, routes.room.list);
+	app.post('/api/room/add/', auth_user, routes.room.add);
+	app.post('/api/room/remove/', auth_user, routes.room.remove);
+	app.get('/api/chat/list/', auth_user, routes.chat.list);
+	app.post('/api/chat/add/', auth_user, routes.chat.add);
 	app.all('*', function(req, res) {
 		res.send(404);
 	});
