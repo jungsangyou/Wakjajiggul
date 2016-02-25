@@ -24,6 +24,7 @@ module.exports = function(app, routes){
 	app.get('/home/chat', auth_user, routes.home.chat); //main (chat)
 	// REST API routes
 	app.get('/api/authenticate/', routes.login.authenticate);
+	app.get('/api/user/list/', auth_user, routes.user.list);
 	app.post('/api/user/add/', auth_admin, routes.user.add);
 	app.get('/api/room/', auth_user, routes.room.info);
 	app.get('/api/room/list/', auth_user, routes.room.list);

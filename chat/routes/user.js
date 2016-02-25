@@ -1,3 +1,12 @@
+exports.list = function(req, res, next) {
+	req.models.User.find({}, function(error, result) {
+		if (error) return next(error);
+		if (result !== null) {
+			res.send(result);
+		}
+   });
+};
+
 /*
  * POST ADD USER
  */
