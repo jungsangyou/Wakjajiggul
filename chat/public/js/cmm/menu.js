@@ -31,7 +31,7 @@ $(document).ready(function(){
 		    	for(var i=0; i<$("#socketUserList > li").find('a').length; i++){
 		    		$("#socketUserList > li").find('a').eq(i).find('em').eq(1).remove();
 		    	}
-		    	socket.emit('createRoom', {roomId: data.roomId});
+		    	socket.emit('createRoom', {loginIds: loginIds});
 		    }
 		});
 	});
@@ -46,7 +46,7 @@ function getRoomList(){
 	    	console.log('room list >> ', data);
 	    	$.each(data, function(index, room) {
 	    		var users = room.users;
-	    		innerHtml += '<li class="menu01 on" id="' + room.roomId + '" roomOk="true" ><a><em><span>' + room.title + '</span></em></a>';
+	    		innerHtml += '<li class="menu01 on" id="' + room.roomId + '"><a id="joinRoom"><em><span>' + room.title + '</span ></em></a> <a id="deleteRoom" class="delete"><em><span>X</span></em></a>';
 	    		for(var i in users){
 	    			if(i==0){
 	    				innerHtml += '<div class="submenu"><ul id="chatName" calss="type2"><li chatLoginId="'+users[i].loginId+'"><a>'+users[i].nickname+'</a></li>';
@@ -71,15 +71,28 @@ function getRoomList(){
 	    		});
 	    	});
 //	    	
-	    	$("li[roomOk=true]").unbind('click').click(function(){
+	    	$("li > #joinRoom").unbind('click').click(function(){
 	    		$(".submenu").hide();
-	    		$(this).find('.submenu').show();
+	    		$(this).parent().find('.submenu').show();
 	    		
-	    		var roomId = $(this).attr('id');
+	    		var roomId = $(this).parent().attr('id');
 	    		gRoomId = roomId;
 	    		$("#content").load('/home/chat/', roomId, function(){
 	    			socket.emit('joinroom', {room: roomId});
 	    		});
+	    	});
+	    	
+	    	$("li > #deleteRoom").unbind('click').click(function(){
+	    		var roomId = $(this).parent().attr('id');
+	    		$.ajax({
+	    		    url: '/api/room/remove/',
+	    		    data : {roomId : roomId},
+	    		    type: 'POST',
+	    		    success: function(data, status, xhr) {
+	    		    	getRoomList();
+	    		    }
+	    		});
+	    		
 	    	});
 	    	
 	    	$("#content").load('/home/room/', function(){
